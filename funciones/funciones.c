@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "funciones.h"
 
-//usaremos esta función para pasar los alfanuméricos a int
+//usaremos esta funciï¿½n para pasar los alfanumï¿½ricos a int
 void auxiliar(){
 
 }
@@ -12,7 +12,7 @@ int validar_ip(char ip[]){
     char aux[4];
     //extraemos todos los valores de la IP y los pasamos a un int
     //Pasamos por las 4 partes de la IP, tomamos cada caracter y los pasamos a otro string
-    //Usamos la función atoi para transformar el valor alfanumérico a numérico para poder
+    //Usamos la funciï¿½n atoi para transformar el valor alfanumï¿½rico a numï¿½rico para poder
     //hacer las operaciones correspondientes
     for(int bandera = 0, z = 0, i = 0, c; bandera < 4; bandera ++, i++, z++){
         for( c = 0; ip[i] != '.' && ip[i] != '\0'; i++, c++){
@@ -24,15 +24,17 @@ int validar_ip(char ip[]){
     }
     //verificamos que la IP no contenga valores mayores a 255
     //que la red no sea 127, 191, 255 o 0
-    if(!((IP[0] > 255 || IP[1] > 255 || IP[2] > 255 || IP[3] > 255) || (IP[0] == 127 || IP[0] == 191 || IP[0] == 255) || (IP[0] == 0))){
+    //Hacemos que IP[0] deba ser menor a 224 para excluir las clases D y E
+    if(!((IP[0] > 223 || IP[1] > 255 || IP[2] > 255 || IP[3] > 255) || (IP[0] == 127 || IP[0] == 191 || IP[0] == 255) || (IP[0] == 0))){
         return 0;
     } else return 1;
-    //devolvemos un valor distinto a 0 si la IP no es válida
+    //devolvemos un valor distinto a 0 si la IP no es vï¿½lida
 }
 
 int validar_puerto(int puerto){
-    if(!(puerto < 49152 || puerto > 65535)){
+    //Los puertos vÃ¡lidos se encuentran en el rango de 1-65535
+    if(puerto > 0 && puerto <= 65535){
         return 0;
     } else return 1;
-    //devolvemos un valor distinto a 0 si el puerto no es válido
+    //devolvemos un valor distinto a 0 si el puerto no es vï¿½lido
 }
