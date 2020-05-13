@@ -179,6 +179,33 @@ void operate(int sd) {
     free(input);
 }
 
+int validateSocket(char *argv[],struct sockaddr_in *addr){
+
+    addr->sin_family=AF_INET;
+
+    int Ip_ConversionStatus = inet_pton(addr->sin_family, argv[1], &addr->sin_addr);
+
+    if(Ip_ConversionStatus != 1){
+        if(Ip_ConversionStatus == 0){
+            printf("Error storing address: Invalid IPv4 string\n");
+            return 0;
+        }else{
+            printf("Error storing address: Invalid adress family\n");
+            return 0;
+        }
+    }
+
+    int port=atoi(argv[2]);
+
+    if(port>65535){
+        printf("Error storing port: Invalid port number\n");
+        return 0;
+    }
+
+    addr->sin_port=htons(port);
+
+    return 1;
+}
 /**
  * Run with
  *         ./myftp <SERVER_IP> <SERVER_PORT>
@@ -188,7 +215,13 @@ int main (int argc, char *argv[]) {
     struct sockaddr_in addr;
 
     // arguments checking
+    if(argc!=3){
+        printf("Invalid arguments\n");
+        return 0;
+    }
 
+    if(!validateSocket(argv,&addr)) return 0;
+    
     // create socket and check for errors
     
     // set socket data    

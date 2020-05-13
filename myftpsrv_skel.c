@@ -188,8 +188,20 @@ void operate(int sd) {
  *         ./mysrv <SERVER_PORT>
  **/
 int main (int argc, char *argv[]) {
+    int port;
 
     // arguments checking
+    if(argc!=2){
+        printf("Invalid arguments");
+        return 0;
+    }
+
+    port=atoi(argv[1]);
+    
+    if(port>65535){
+        printf("Invalid arguments");
+        return 0;
+    }
 
     // reserve sockets and variables space
 
